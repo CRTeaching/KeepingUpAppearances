@@ -15,6 +15,3 @@ tensorflow
 
 To install
 > pip install keras skimage numpy tenserflow
-
-*Based on*:
-https://www.freecodecamp.org/news/colorize-b-w-photos-with-a-100-line-neural-network-53d9b4449f8d/
