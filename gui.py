@@ -32,7 +32,7 @@ def upload():
     #loop through files that were submitted via form
     for upload in request.files.getlist("file"):
         #debugging
-        print(upload)
+        print(upload.filename)
         #obtain filename from the list of objects
         filename = upload.filename
         #add file name to the folder that we want to store our img
