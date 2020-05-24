@@ -17,10 +17,10 @@ X = []
 # 1: Batch size to load
 # 2: The array to save the images in.
 # 3: (Optional) Folder with the images (default: "Train/")
-batch_size = 50
+batch_size = 50 # 50 for debugging purposes, as soon as it works I will slowly move it up.
 load_images(batch_size, X)
 
-# Convert standard array to numpy array for future
+# Convert standard array to numpy array
 X = np.array(X)#, dtype=float) #float gives error, use 1.0/255 instead.
 
 # Split the loaded dataset into training and testing part
@@ -28,7 +28,6 @@ X = np.array(X)#, dtype=float) #float gives error, use 1.0/255 instead.
 training_ratio = 0.8
 Xtrain = train_test_split(X, training_ratio)
 
-print("I work thus far")
 # Load the neural network
 model = ai_model()
 model.compile(optimizer='rmsprop', loss='mse')
@@ -43,10 +42,9 @@ datagen = ImageDataGenerator(
         rotation_range=20,
         horizontal_flip=True)
 
-print("I work thus far321")
 # train the model
 train(datagen, Xtrain, model)
-print("I break thus far")
+
 # Save the selected model
 # save_model(model)
 
