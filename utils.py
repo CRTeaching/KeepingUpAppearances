@@ -17,20 +17,10 @@ def load_images(batch_size, batch, folder='Train/'):
         batch.append(temporary_img) #Add the image to the batch
         number_of_files += 1 # Count the number of files
         if number_of_files % 10 == 0:
-            print(number_of_files) #Print every 10th number
-        # if the batch_size is met, end the function loop.
-        if number_of_files == batch_size:
+            print(number_of_files) #Print every 10th number so it doesn't look stuck.
+        # if the batch_size is met or exceeded, end the function loop.
+        if number_of_files <= batch_size:
             break
-
-def train_test_split(batch, training_percentage):
-    split = int(training_percentage * len(batch))
-
-    # use the given percentage for training
-    Xtrain = batch[:split]
-
-    #normalise the data (divide it by 255), while keeping it as float
-    Xtrain = 1.0/255 * Xtrain
-    return Xtrain
 
 # Generate training data
 def image_a_b_gen(datagen, Xtrain):
@@ -52,13 +42,12 @@ but dont support callbacks, while others do vice versa.
 Callback isn't that useful to the end user so the option to turn it on
 (debugging) is by default False and can be turned on if somebody wishes so.
 """
-def train(datagen, Xtrain, model, debugging = False):
+def train(datagen, Xtrain, model, steps, epochs_given, debugging = True):
     # In my experience, callback only works on Manjaro.
     if(debugging):
         model.fit_generator(image_a_b_gen(datagen, Xtrain),
-                            steps_per_epoch=3,
-                            epochs=1,
-                            use_multiprocessing=True)
+                            steps_per_epoch=steps,
+                            epochs=epochs_given)#,use_multiprocessing=True)
     else:
         from keras.callbacks import TensorBoard
         tensorboard = TensorBoard(log_dir="output/current_run")
@@ -79,43 +68,24 @@ def save_model(model, name="model"):
     model.save_weights(name + ".h5")
 
 """
-Test the accuracy of the model.
-A remaining percentage of the batch is used to do so to avoid getting
-inflated accuracy when the same pictures that were used for training
-are used for testing.
-"""
-def test_accurracy(batch, split_percentage_for_testing, model):
-    split_percentage_for_testing = int(split_percentage_for_testing * len(batch))
-    
-    # Get the lightness channel of an image and normalise it.
-    batch_test = rgb2lab(1.0/255 * batch[split_percentage_for_testing:])[:,:,:,0]
-    batch_test = batch_test.reshape(batch_test+(1,))
-    #Get the ab channels of the image.
-    batch_ab = rgb2lab(1.0/255 * batch[split_percentage_for_testing:])[:,:,:,1:]
-    # Normalise the data to be between 1 and -1.
-    batch_ab = batch_ab / 128
-    # Finally, print the model's accuracy.
-    print(model.evaluate(batch_test, batch_ab, batch_size=20))
-
-"""
 Although we measure the model's accuracy with test_accurracy,
 It is best to see how accurate the neural network is by actually seeing
 what it can produce.
 This function is the main method for evaluating the model's performance.
 A default folder with the testing images is given but can be changed accordingly.
 """
-def prepare_accuracy_visualisation_images(images_to_be_colorised, folder='Test/'):
+def prepare_accuracy_visualisation_images(color_me, folder='Test/'):
     for filename in os.listdir(folder):
-        images_to_be_colorised.append(img_to_array(load_img(folder+filename)))
-    images_to_be_colorised = np.array(images_to_be_colorised, dtype=float)
-    images_to_be_colorised = rgb2lab(1.0/255 * images_to_be_colorised)[:,:,:,0]
-    images_to_be_colorised = images_to_be_colorised.reshape(
-        images_to_be_colorised.shape+(1,))
+        color_me.append(img_to_array(load_img(folder+filename)))
+    color_me = np.array(color_me, dtype=float)
+    color_me = rgb2lab(1.0/255 * color_me)[:,:,:,0]
+    color_me = color_me.reshape(color_me.shape+(1,))
+    return color_me
 
 """
 Save the images.
 """
-def save_the_images(output):
+def save_the_images(output, color_me):
     # Add a module that does float64 to uint8 conversion for us
     from skimage import img_as_ubyte
     
@@ -124,9 +94,9 @@ def save_the_images(output):
         # Create an empty matrix (3 channels, 256 by 256 pixels)
         create_image = np.zeros((256, 256, 3))
         # Get the lightness channel from the output
-        create_image[:,:,0] = output[i][:,:,0]
+        create_image[:,:,0] = color_me[i][:,:,0]
         # Get the ab channels from output.
-        create_image[:,:,1] = output[i]
+        create_image[:,:,1:] = output[i]
 
         create_image = lab2rgb(create_image)
         # To avoid lossy conversion, convert float64 to uint8.
@@ -134,15 +104,3 @@ def save_the_images(output):
 
         imsave("Result/img_"+str(i)+".png", create_image)
         print("Saved picture number: ", i)
-
-"""
-Colorise the selected images and save them in results folder.
-"""
-def colorise_output(model, images_to_be_colorised):
-    output = model.predict(images_to_be_colorised)
-    # The neural network makes the values to be between -1 and 1.
-    # To restore the values of ab channels, we multiply them by 128.
-    output = output * 128
-    # save the images.
-    save_the_images(output)
-    #return output # not needed since we save the images directly from here.
