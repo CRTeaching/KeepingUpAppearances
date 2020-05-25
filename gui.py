@@ -28,7 +28,9 @@ def upload():
     else:
         print("Could not create upload directory: {}".format(target))
     print(request.files.getlist("file"))
-
+    
+    # Create a filename variable to make it possible to return the image.
+    filename = ""
     #loop through files that were submitted via form
     for upload in request.files.getlist("file"):
         #debugging
