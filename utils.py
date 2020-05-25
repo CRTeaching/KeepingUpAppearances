@@ -85,6 +85,8 @@ inflated accuracy when the same pictures that were used for training
 are used for testing.
 """
 def test_accurracy(batch, split_percentage_for_testing, model):
+    split_percentage_for_testing = int(split_percentage_for_testing * len(batch))
+    
     # Get the lightness channel of an image and normalise it.
     batch_test = rgb2lab(1.0/255 * batch[split_percentage_for_testing:])[:,:,:,0]
     batch_test = batch_test.reshape(batch_test+(1,))

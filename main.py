@@ -25,7 +25,7 @@ X = np.array(X)#, dtype=float) #float gives error, use 1.0/255 instead.
 
 # Split the loaded dataset into training and testing part
 # as per the given percentage (80% by default)
-training_ratio = 0.8
+training_ratio = 0.95
 Xtrain = train_test_split(X, training_ratio)
 
 # Load the neural network
