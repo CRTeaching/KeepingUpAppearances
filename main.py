@@ -37,7 +37,7 @@ model = ai_model()
 from tensorflow import keras
 learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=1e-2,
-        decay_steps=10000,
+        decay_steps=100,
         decay_rate=0.6
 )
 optim = keras.optimizers.SGD(learning_rate=learning_rate_scheduler, clipnorm=1)
