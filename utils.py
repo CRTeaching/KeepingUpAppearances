@@ -3,6 +3,9 @@ from keras.preprocessing.image import load_img, img_to_array, array_to_img
 from skimage.color import rgb2lab, lab2rgb, rgb2gray
 import numpy as np
 
+from keras import models
+import json
+
 from skimage.io import imsave
 
 """
@@ -64,8 +67,17 @@ don't want to override their previous work.
 def save_model(model, name="model"):
     model_json = model.to_json()
     with open(name + ".json", "w") as json_file:
-        json_file.write(model_json)
-    model.save_weights(name + ".h5")
+        #json_file.write(model_json) #json.dump
+        json.dump(model_json, json_file)
+    model.save_weights(name + ".hdf5")
+
+def loadModel(name):
+    with open(name+'.json','r') as f:
+        model_json = json.load(f)
+    model = models.model_from_json(model_json)
+    model.load_weights(name+'.hdf5')
+    #model = models.load_model(name)
+    return model
 
 """
 Although we measure the model's accuracy with test_accurracy,
