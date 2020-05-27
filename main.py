@@ -1,6 +1,6 @@
 import numpy as np
 import os 
-import random
+
 from keras.preprocessing.image import ImageDataGenerator
 from model import ai_model
 
@@ -18,11 +18,8 @@ X = []
 batch_size = 700
 load_images(batch_size, X)
 
-# Convert standard array to numpy array
-X = np.array(X)#, dtype=float) #float gives error, use 1.0/255 instead.
-
 # Split the loaded dataset into training and testing part
-# as per the given percentage (80% by default)
+# as per the given percentage (90% by default)
 training_percentage = 0.9
 split = int(training_percentage * len(X))
 
@@ -41,9 +38,9 @@ learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         decay_steps=100,
         decay_rate=0.6
 )
-optim = keras.optimizers.RMSprop(learning_rate=learning_rate_scheduler, clipnorm=0.01)
-#optim = keras.optimizers.Adam(learning_rate=0.01)
-model.compile(optimizer=optim, loss='mse') #loss='categorical_crossentropy' # makes loss: nan
+optim = keras.optimizers.RMSprop(learning_rate=learning_rate_scheduler)
+
+model.compile(optimizer=optim, loss='mse')
 
 # Image transformer
 # Rotate, flip, zoom in on pictures and etc so that
@@ -76,7 +73,7 @@ Ytest = rgb2lab(1.0/255*X[split:])[:,:,:,1:]
 # Normalise the data to be between -1 and 1.
 Ytest = Ytest / 128
 #print the model's accuracy.
-print(model.evaluate(Xtest, Ytest, batch_size=20))
+print(model.evaluate(Xtest, Ytest, batch_size=70))
 
 # Load the Testing subdataset and prepare the images
 color_me = []

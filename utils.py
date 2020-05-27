@@ -24,6 +24,8 @@ def load_images(batch_size, batch, folder='Train/'):
         # if the batch_size is met or exceeded, end the function loop.
         if number_of_files <= batch_size:
             break
+    # Convert standard array to numpy array - can take a second or two
+    batch = np.array(batch)#, dtype=float) #float gives error, use 1.0/255 instead.
 
 # Generate training data
 def image_a_b_gen(datagen, Xtrain):
