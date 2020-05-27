@@ -8,7 +8,8 @@ def ai_model():
     model = Sequential()
     # images that are 256px by 256px are expected as input
     # Only lightness channel should be given.
-    model.add(InputLayer(input_shape=(256,256,1)))
+    #model.add(InputLayer(input_shape=(256,256,1) ))
+    model.add(Conv2D(filters = 20, kernel_size = 3, input_shape=(256,256,1) ))
     model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(Conv2D(64, (3, 3), activation='relu', padding='same', strides=2))
     model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
