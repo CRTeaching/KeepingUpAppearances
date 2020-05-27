@@ -15,7 +15,7 @@ X = []
 # 1: Batch size to load
 # 2: The array to save the images in.
 # 3: (Optional) Folder with the images (default: "Train/")
-batch_size = 500
+batch_size = 700
 load_images(batch_size, X)
 
 # Convert standard array to numpy array
@@ -23,7 +23,7 @@ X = np.array(X)#, dtype=float) #float gives error, use 1.0/255 instead.
 
 # Split the loaded dataset into training and testing part
 # as per the given percentage (80% by default)
-training_percentage = 0.95
+training_percentage = 0.9
 split = int(training_percentage * len(X))
 
 # use the given percentage for training
@@ -34,15 +34,16 @@ Xtrain = 1.0/255 * Xtrain
 
 # Load the neural network
 model = ai_model()
+model.summary() #TESTING THIS OUT.
 from tensorflow import keras
 learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=1e-2,
         decay_steps=100,
         decay_rate=0.6
 )
-optim = keras.optimizers.SGD(learning_rate=learning_rate_scheduler, clipnorm=1)
+optim = keras.optimizers.RMSprop(learning_rate=learning_rate_scheduler, clipnorm=0.01)
 #optim = keras.optimizers.Adam(learning_rate=0.01)
-model.compile(optimizer=optim, loss='categorical_crossentropy')
+model.compile(optimizer=optim, loss='mse') #loss='categorical_crossentropy' # makes loss: nan
 
 # Image transformer
 # Rotate, flip, zoom in on pictures and etc so that
@@ -55,14 +56,14 @@ datagen = ImageDataGenerator(
         horizontal_flip=True)
 
 # train the model
-# Last param is optional (True by default)
-# It's a boolean, disables callbacks' tensorboard if false
-steps = 1000 #steps_per_epochs value
+# Last param is optional (True by default). Enables callbacks' tensorboard if false
+# In my experience it can cause errors on different systems so it is disabled by default.
+steps = 700 #steps_per_epochs value
 epochs_given = 100 # epochs for the training loop
 train(datagen, Xtrain, model, steps, epochs_given)
 
-# Save the selected model
-# save_model(model)
+# Save the selected model under the name given as second param (default: "model")
+save_model(model, "new_model")
 
 ## test the model
 from skimage.color import rgb2lab
@@ -90,5 +91,3 @@ output = model.predict(color_me)
 output = output * 128
 # save the images.
 save_the_images(output, color_me)
-# conduct the testing
-#colorise_output(model, color_me)
