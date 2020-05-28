@@ -12,8 +12,8 @@ It was too large to put on GitHub so it is linked below.
 
 ## Baseline is split across 3 different versions.
 
-**Alpha version** of our baseline can be seen in the **alpha_version_notebook.ipynb** or [https://github.com/CRTeaching/KeepingUpAppearances/tree/f89ff1f90edf0af6ead71c54af3c7d3c62bce2a2](alpha version snapshot link)
-**Beta version** of our baseline can be seen in **baseline.ipynb** or [https://github.com/CRTeaching/KeepingUpAppearances/tree/dd3ce7c1b8434ff19dcaf7e0a3eafae702719e9f](beta version snapshot link)
+**Alpha version** of our baseline can be seen in the **alpha_version_notebook.ipynb** or [alpha version snapshot link](https://github.com/CRTeaching/KeepingUpAppearances/tree/f89ff1f90edf0af6ead71c54af3c7d3c62bce2a2)
+**Beta version** of our baseline can be seen in **baseline.ipynb** or [beta version snapshot link](https://github.com/CRTeaching/KeepingUpAppearances/tree/dd3ce7c1b8434ff19dcaf7e0a3eafae702719e9f)
 **Final version of the baseline** (current implementation) is split across **main.py**, **model.py**, **colorize.py** and **utils.py**
 
 Alpha version works with one photo at a time. Epochs value works best around 1000.
