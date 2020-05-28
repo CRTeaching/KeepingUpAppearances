@@ -21,6 +21,15 @@ It was too large to put on GitHub so it is linked below.
 Alpha version works with one photo at a time. Epochs value works best around 1000.
 Its performance is bad with cold color pallet or when a different image is used for testing and for predicting.
 
+## API
+
+API needs static and templates folder to be in place to function correctly, as well as all python files.
+
+To run the API, simply run ***"python api.py"***. Afterwards, a localserver should be created.
+
+127.0.0.1:5000/ is the default link it creates. After accessing it, a list of possible options should appear.
+It can take a while to train a model so if a page is loading in for a while, check out output logs. 
+
 ### Layout
 
 To train the model, test its performance, and run some images through it: run main.py (it is esentially the training loop).
