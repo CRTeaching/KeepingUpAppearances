@@ -14,8 +14,13 @@ X = []
 # Load a number of images from a specified folder into the X array.
 # 1: Batch size to load
 # 2: The array to save the images in.
+<<<<<<< HEAD
 # 3: (Optional) Folder with the images (default: "static/Train/")
-batch_size = 20
+batch_size = 700
+=======
+# 3: (Optional) Folder with the images (default: "Train/")
+batch_size = 700
+>>>>>>> c24f1bc088b74ca4e4ab35799f9796a15d048523
 X = load_images(batch_size, X)
 
 # Split the loaded dataset into training and testing part
@@ -54,9 +59,14 @@ datagen = ImageDataGenerator(
 # train the model
 # Last param is optional (True by default). Enables callbacks' tensorboard if false
 # In my experience it can cause errors on different systems so it is disabled by default.
-steps = 4 #steps_per_epochs value
-epochs_given = 5 # epochs for the training loop
+<<<<<<< HEAD
+steps = 70 #steps_per_epochs value
+epochs_given = 10 # epochs for the training loop
 #print(np.any(np.isnan(Xtrain))) # locating loss:nan issue.
+=======
+steps = 70 #steps_per_epochs value
+epochs_given = 10 # epochs for the training loop
+>>>>>>> c24f1bc088b74ca4e4ab35799f9796a15d048523
 train(datagen, Xtrain, model, steps, epochs_given)
 
 # Save the selected model under the name given as second param (default: "model")

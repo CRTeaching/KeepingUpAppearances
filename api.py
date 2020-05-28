@@ -20,7 +20,7 @@ def show_images():
     #print(images)
     return render_template("show_images.html", images=images)
 
-@app.route('/Test/')
+@app.route('/showcase_testing/')
 def show_testing_images():
     images = []
     # Load in all the images.
@@ -29,7 +29,7 @@ def show_testing_images():
         images.append(image)
     return render_template("show_testing_images.html", images=images)
 
-@app.route('/Train/')
+@app.route('/showcase_training/')
 def show_training_images():
     images = []
         # Load in all the images.
@@ -70,30 +70,20 @@ def colorize_images():
     return render_template("show_predicted_images.html", images=images)
     #return "It worked!"
 
-# @app.route('/imagine/', methods=['GET', 'POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#         # check if the post request has the file part
-#         if 'file' not in request.files:
-#             flash('No file part')
-#             return redirect(request.url)
-#         file = request.files['file']
-#         # if user does not select file, browser also
-#         # submit an empty part without filename
-#         if file.filename == '':
-#             flash('No selected file')
-#             return redirect(request.url)
-#         filename = file.filename
-#         file.save(os.path.join('images', filename)) #check back on 'images'
-#         return redirect(url_for('uploaded_file',filename=filename))
-#     return '''
-#         <!doctype html>
-#     <title>Upload new File</title>
-#     <h1>Upload new File</h1>
-#     <form method=post enctype=multipart/form-data>
-#       <input type=file name=file>
-#       <input type=submit value=Upload>
-#     </form>
-#     '''
+@app.route('/train/')
+def train_model():
+    # This will run main.py
+    import main
+
+    #Load the images after going through main.py
+    folder = os.listdir('static/Result/')
+    images = []
+    for image in folder:
+        images.append(image)
+    return render_template("show_predicted_images.html", images=images)
+
+    #return render_template("index.html")
 if __name__ == "__main__":
+    # note: due to keras version used, I have to disable debug and threaded to avoid
+    # ModuleNotFoundError: No module named 'tensorflow_core.keras' error
     app.run(debug=False, threaded=False)#debug=True)#
