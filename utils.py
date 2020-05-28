@@ -99,7 +99,7 @@ def prepare_accuracy_visualisation_images(color_me, folder='Test/'):
 """
 Save the images.
 """
-def save_the_images(output, color_me):
+def save_the_images(output, color_me, folder="Result/"):
     # Add a module that does float64 to uint8 conversion for us
     from skimage import img_as_ubyte
     
@@ -116,5 +116,5 @@ def save_the_images(output, color_me):
         # To avoid lossy conversion, convert float64 to uint8.
         create_image = img_as_ubyte(create_image)
 
-        imsave("Result/img_"+str(i)+".png", create_image)
+        imsave(folder+"img_"+str(i)+".png", create_image)
         print("Saved picture number: ", i)
