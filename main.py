@@ -14,9 +14,9 @@ X = []
 # Load a number of images from a specified folder into the X array.
 # 1: Batch size to load
 # 2: The array to save the images in.
-# 3: (Optional) Folder with the images (default: "Train/")
-batch_size = 700
-load_images(batch_size, X)
+# 3: (Optional) Folder with the images (default: "static/Train/")
+batch_size = 20
+X = load_images(batch_size, X)
 
 # Split the loaded dataset into training and testing part
 # as per the given percentage (90% by default)
@@ -25,8 +25,7 @@ split = int(training_percentage * len(X))
 
 # use the given percentage for training
 Xtrain = X[:split]
-
-#normalise the data (divide it by 255), while keeping it as float
+#rnomalise the data (divide it by 255), while keeping it as float
 Xtrain = 1.0/255 * Xtrain
 
 # Load the neural network
@@ -35,8 +34,8 @@ model.summary() #TESTING THIS OUT.
 from tensorflow import keras
 learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=1e-2,
-        decay_steps=100,
-        decay_rate=0.6
+        decay_steps=1000,
+        decay_rate=0.9
 )
 optim = keras.optimizers.RMSprop(learning_rate=learning_rate_scheduler)
 
@@ -55,12 +54,13 @@ datagen = ImageDataGenerator(
 # train the model
 # Last param is optional (True by default). Enables callbacks' tensorboard if false
 # In my experience it can cause errors on different systems so it is disabled by default.
-steps = 700 #steps_per_epochs value
-epochs_given = 100 # epochs for the training loop
+steps = 4 #steps_per_epochs value
+epochs_given = 5 # epochs for the training loop
+#print(np.any(np.isnan(Xtrain))) # locating loss:nan issue.
 train(datagen, Xtrain, model, steps, epochs_given)
 
 # Save the selected model under the name given as second param (default: "model")
-save_model(model, "new_model")
+save_model(model, "model_2")
 
 ## test the model
 from skimage.color import rgb2lab
@@ -79,7 +79,7 @@ print(model.evaluate(Xtest, Ytest, batch_size=70))
 color_me = []
 
 # Second param is optional, points to the folder
-# with testing images (Default: "Test/")
+# with testing images (Default: "static/Test/")
 color_me = prepare_accuracy_visualisation_images(color_me)
 
 output = model.predict(color_me)

@@ -22,10 +22,11 @@ def load_images(batch_size, batch, folder='static/Train/'):
         if number_of_files % 10 == 0:
             print(number_of_files) #Print every 10th number so it doesn't look stuck.
         # if the batch_size is met or exceeded, end the function loop.
-        if number_of_files <= batch_size:
+        if number_of_files >= batch_size:
             break
     # Convert standard array to numpy array - can take a second or two
     batch = np.array(batch)#, dtype=float) #float gives error, use 1.0/255 instead.
+    return batch
 
 # Generate training data
 def image_a_b_gen(datagen, Xtrain):
