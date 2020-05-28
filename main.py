@@ -14,7 +14,7 @@ X = []
 # Load a number of images from a specified folder into the X array.
 # 1: Batch size to load
 # 2: The array to save the images in.
-batch_size = 30
+batch_size = 40
 X = load_images(batch_size, X)
 
 # Split the loaded dataset into training and testing part
@@ -34,7 +34,7 @@ from tensorflow import keras
 learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=1e-2,
         decay_steps=10000,
-        decay_rate=0.37
+        decay_rate=0.34
 )
 optim = keras.optimizers.SGD(learning_rate=learning_rate_scheduler)
 

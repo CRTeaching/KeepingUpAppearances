@@ -68,7 +68,6 @@ def colorize_images():
     for image in folder:
         images.append(image)
     return render_template("show_predicted_images.html", images=images)
-    #return "It worked!"
 
 @app.route('/train/')
 def train_model():
