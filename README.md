@@ -28,6 +28,8 @@ To run some of the functions independently, utils.py can be a great resource to 
 Colorize.py is essentially what the user would see. It loads in the model and colorizes the selected photos.
 To see the gui, run gui.py (requires template folder to work).
 
+To ensure everyting works with the GUI, Result/, Test/, Train/ and Example Results/ folders were moved to "static/" folder. This was done to ensure that flask can access those files easily, allowing for easier integration with the API and GUI. Template folder was also created to ensure html code is ready to go when flask needs it.
+
 ## Requirements
 
 **Required Libraries**:
@@ -46,11 +48,11 @@ Os and json, which are also required, are usually included with python.
 
 There are some default variables set around the program and its functions. Below is a list of those functions and their values. Users can change them freely in the code. Parsing arguments was part of the team missions, which we sadly had to drop but I feel like this is an ok alternative.
 
-1. ***load_images*** loads images from ***Train/*** folder by default.
+1. ***load_images*** loads images from ***static/Train/*** folder by default.
 2. when training, ***tensorboard*** is only used when last parameter is False. Across 4 different machines I had varring results (based on installation, OS and so on) with getting callbacks to work, so it is ***disabled by default***.
 3. when ***saving the model***, the ***default name is "model"***. This means the model is saved as ***model.json and its weights are saved as model.hdf5***.
-4. When preparing accuracy visualisation images a.k.a testing the model, ***the default folder to load the images from is "Test/"***.
-5. When ***images are*** being saved, they are ***saved under "Result/"***.
+4. When preparing accuracy visualisation images a.k.a testing the model, ***the default folder to load the images from is "static/Test/"***.
+5. When ***images are*** being saved, they are ***saved under "static/Result/"***.
 
 ## References
 
