@@ -14,8 +14,12 @@ X = []
 # Load a number of images from a specified folder into the X array.
 # 1: Batch size to load
 # 2: The array to save the images in.
-batch_size = 20
+batch_size = 30
 X = load_images(batch_size, X)
+
+# Split the loaded dataset into training and testing part
+# as per the given percentage (90% by default)
+training_percentage = 0.9
 split = int(training_percentage * len(X))
 
 # use the given percentage for training
@@ -29,8 +33,8 @@ model.summary() #TESTING THIS OUT.
 from tensorflow import keras
 learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=1e-2,
-        decay_steps=1000,
-        decay_rate=0.9
+        decay_steps=100,
+        decay_rate=0.2
 )
 optim = keras.optimizers.RMSprop(learning_rate=learning_rate_scheduler)
 
@@ -50,7 +54,7 @@ datagen = ImageDataGenerator(
 # Last param is optional (True by default). Enables callbacks' tensorboard if false
 # In my experience it can cause errors on different systems so it is disabled by default.
 steps = 5 #steps_per_epochs value
-epochs_given = 4 # epochs for the training loop
+epochs_given = 5 # epochs for the training loop
 #print(np.any(np.isnan(Xtrain))) # locating loss:nan issue.
 train(datagen, Xtrain, model, steps, epochs_given)
 
