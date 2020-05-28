@@ -5,6 +5,7 @@ import os
 
 app = Flask(__name__)
 
+# The hub of the api - links to different options
 @app.route('/')
 def index():
     return render_template("index.html")

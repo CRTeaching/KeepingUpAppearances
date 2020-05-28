@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Nav bar</title>
+{% endblock %}
+
+
+
+{% block body %}
+{% block content %}
+{% endblock %}
+<header>
+    <div>
+       <strong>
+          <nav>
+             <ul>
+                <li><a href="{{ url_for('index') }}">Homepage</a></li>
+                <li><a href="{{ url_for('show_images') }}">Show previous results</a></li>
+                <li><a href="{{ url_for('show_testing_images') }}">Show testing images</a></li>
+                <li><a href="{{ url_for('show_training_images') }}">Show training images</a></li>
+                <li><a href="{{ url_for('colorize_images') }}">Colorize images</a></li>
+                <li><a href="{{ url_for('train_model') }}">Train model</a></li>
+             </ul>
+          </nav>
+       </strong>
+    </div>
+</header>
+{% endblock %}
