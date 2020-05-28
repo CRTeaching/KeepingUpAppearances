@@ -12,7 +12,7 @@ from skimage.io import imsave
 Provided a folder, load a number of images equal to batch_size.
 Save it in a given "batch".
 """
-def load_images(batch_size, batch, folder='Train/'):
+def load_images(batch_size, batch, folder='static/Train/'):
     number_of_files = 0
     for filename in os.listdir(folder):
         temporary_img = load_img(folder + filename)
@@ -88,7 +88,7 @@ what it can produce.
 This function is the main method for evaluating the model's performance.
 A default folder with the testing images is given but can be changed accordingly.
 """
-def prepare_accuracy_visualisation_images(color_me, folder='Test/'):
+def prepare_accuracy_visualisation_images(color_me, folder='static/Test/'):
     for filename in os.listdir(folder):
         color_me.append(img_to_array(load_img(folder+filename)))
     color_me = np.array(color_me, dtype=float)
@@ -99,7 +99,7 @@ def prepare_accuracy_visualisation_images(color_me, folder='Test/'):
 """
 Save the images.
 """
-def save_the_images(output, color_me, folder="Result/"):
+def save_the_images(output, color_me, folder="static/Result/"):
     # Add a module that does float64 to uint8 conversion for us
     from skimage import img_as_ubyte
     
