@@ -38,16 +38,17 @@ To see the gui, run gui.py (requires template folder to work).
 To install them:
 > pip install keras skimage numpy flask
 
-And os and json, which are usually included with python
+Os and json, which are also required, are usually included with python.
 
 **Other setup**:
+
 There are some default variables set around the program and its functions. Below is a list of those functions and their values. Users can change them freely in the code. Parsing arguments was part of the team missions, which we sadly had to drop but I feel like this is an ok alternative.
 
-1. load_images loads images from Train/ folder by default.
-2. when training, tensorboard is only used when last parameter is False. Across 4 different machines I had varring results (based on installation, OS and so on) with getting callbacks to work, so it is disabled by default.
-3. when saving the model, the default name is "model". This means the model is saved as model.json and its weights are saved as model.hdf5.
-4. When preparing accuracy visualisation images a.k.a testing the model, the default folder to load the images from is "Test/"
-5. When images are being saved, they are saved under "Result/".
+1. *load_images* loads images from *Train/* folder by default.
+2. when training, *tensorboard* is only used when last parameter is False. Across 4 different machines I had varring results (based on installation, OS and so on) with getting callbacks to work, so it is *disabled by default*.
+3. when *saving the model*, the *default name is "model"*. This means the model is saved as *model.json and its weights are saved as model.hdf5*.
+4. When preparing accuracy visualisation images a.k.a testing the model, *the default folder to load the images from is "Test/"*.
+5. When *images are* being saved, they are *saved under "Result/"*.
 
 ## References
 
