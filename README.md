@@ -10,6 +10,10 @@ Flask was used for API and GUI.
 Before doing anything, a dataset needs to be in place.
 It was too large to put on GitHub so it is linked below.
 
+Our mission docs are located in /missions/NAME where NAME is team member's name.
+
+Documentation is located in /documentation/ folder.
+
 ## Baseline is split across 3 different versions.
 
 **Alpha version** of our baseline can be seen in the **alpha_version_notebook.ipynb** or [alpha version snapshot link](https://github.com/CRTeaching/KeepingUpAppearances/tree/f89ff1f90edf0af6ead71c54af3c7d3c62bce2a2)
