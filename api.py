@@ -96,4 +96,6 @@ def colorize_images():
 #     </form>
 #     '''
 if __name__ == "__main__":
+    # note: due to keras version used, I have to disable debug and threaded to avoid
+    # ModuleNotFoundError: No module named 'tensorflow_core.keras' error
     app.run(debug=False, threaded=False)#debug=True)#
