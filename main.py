@@ -19,7 +19,7 @@ X = load_images(batch_size, X)
 
 # Split the loaded dataset into training and testing part
 # as per the given percentage (90% by default)
-training_percentage = 0.9
+training_percentage = 0.95
 split = int(training_percentage * len(X))
 
 # use the given percentage for training
@@ -29,14 +29,14 @@ Xtrain = 1.0/255 * Xtrain
 
 # Load the neural network
 model = ai_model()
-model.summary() #TESTING THIS OUT.
+model.summary() # Give some information on the neural network
 from tensorflow import keras
 learning_rate_scheduler = keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=1e-2,
-        decay_steps=100,
-        decay_rate=0.2
+        decay_steps=10000,
+        decay_rate=0.37
 )
-optim = keras.optimizers.RMSprop(learning_rate=learning_rate_scheduler)
+optim = keras.optimizers.SGD(learning_rate=learning_rate_scheduler)
 
 model.compile(optimizer=optim, loss='mse')
 
@@ -53,13 +53,13 @@ datagen = ImageDataGenerator(
 # train the model
 # Last param is optional (True by default). Enables callbacks' tensorboard if false
 # In my experience it can cause errors on different systems so it is disabled by default.
-steps = 5 #steps_per_epochs value
+steps = 4 #steps_per_epochs value
 epochs_given = 5 # epochs for the training loop
 #print(np.any(np.isnan(Xtrain))) # locating loss:nan issue.
 train(datagen, Xtrain, model, steps, epochs_given)
 
 # Save the selected model under the name given as second param (default: "model")
-save_model(model, "model_2")
+save_model(model, "model")
 
 ## test the model
 from skimage.color import rgb2lab
