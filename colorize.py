@@ -1,11 +1,11 @@
 from utils import save_the_images, loadModel, prepare_accuracy_visualisation_images
 
 # Firstly, load in the model from previous training sessions
-model = loadModel('new_model')
+model = loadModel('model')
 
 # Secondly, load in images to colorise (they only have the lightness channel)
 color_me = []
-location = "Test/"
+location = "static/Test/"
 color_me = prepare_accuracy_visualisation_images(color_me, location)
 
 # Thirdly, Colorize the loaded images
