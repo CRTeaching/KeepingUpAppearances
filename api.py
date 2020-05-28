@@ -43,48 +43,57 @@ def show_training_images():
         if number_of_files == 800: #if number of images equals the batch_size of 800, stop.
             break
     return render_template("show_training_images.html", images=images)
-@app.route('/colorize/')
-def colorize_images(folder = "Test/", model_name='new_model'):
+
+@app.route('/colorize/', methods=['GET', 'POST'])
+def colorize_images():
+    folder = "static/Test/"
+    model_name='model'
     from utils import save_the_images, loadModel, prepare_accuracy_visualisation_images
     # Firstly, load in the model from previous training sessions
     model = loadModel(model_name)
     # Secondly, load in images to colorise (they only have the lightness channel)
     color_me = []
     color_me = prepare_accuracy_visualisation_images(color_me, folder)
-
     # Thirdly, Colorize the loaded images
     output = model.predict(color_me)
     output = output * 128 # Turn the -1 to 1 values into proper Lab values.
 
     # Finally, Save the colorized images
     save_the_images(output, color_me)
-    return "It worked!"
 
-@app.route('/imagine/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
+    ## Now load those saved images back up so they can be displayed:
+    images = []
+    # Load in all the images.
+    folder = os.listdir('static/Result/')
+    for image in folder:
+        images.append(image)
+    return render_template("show_predicted_images.html", images=images)
+    #return "It worked!"
 
-        filename = file.filename
-        file.save(os.path.join('images', filename)) #check back on 'images'
-        return redirect(url_for('uploaded_file',filename=filename))
-    return '''
-        <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+# @app.route('/imagine/', methods=['GET', 'POST'])
+# def upload_file():
+#     if request.method == 'POST':
+#         # check if the post request has the file part
+#         if 'file' not in request.files:
+#             flash('No file part')
+#             return redirect(request.url)
+#         file = request.files['file']
+#         # if user does not select file, browser also
+#         # submit an empty part without filename
+#         if file.filename == '':
+#             flash('No selected file')
+#             return redirect(request.url)
+#         filename = file.filename
+#         file.save(os.path.join('images', filename)) #check back on 'images'
+#         return redirect(url_for('uploaded_file',filename=filename))
+#     return '''
+#         <!doctype html>
+#     <title>Upload new File</title>
+#     <h1>Upload new File</h1>
+#     <form method=post enctype=multipart/form-data>
+#       <input type=file name=file>
+#       <input type=submit value=Upload>
+#     </form>
+#     '''
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False, threaded=False)#debug=True)#
