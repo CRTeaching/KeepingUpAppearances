@@ -24,7 +24,7 @@ split = int(training_percentage * len(X))
 
 # use the given percentage for training
 Xtrain = X[:split]
-#rnomalise the data (divide it by 255), while keeping it as float
+# normalise the data (divide it by 255), while keeping it as float
 Xtrain = 1.0/255 * Xtrain
 
 # Load the neural network
