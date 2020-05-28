@@ -16,7 +16,7 @@ X = []
 # 2: The array to save the images in.
 # 3: (Optional) Folder with the images (default: "Train/")
 batch_size = 700
-load_images(batch_size, X)
+X = load_images(batch_size, X)
 
 # Split the loaded dataset into training and testing part
 # as per the given percentage (90% by default)
@@ -55,8 +55,8 @@ datagen = ImageDataGenerator(
 # train the model
 # Last param is optional (True by default). Enables callbacks' tensorboard if false
 # In my experience it can cause errors on different systems so it is disabled by default.
-steps = 700 #steps_per_epochs value
-epochs_given = 100 # epochs for the training loop
+steps = 70 #steps_per_epochs value
+epochs_given = 10 # epochs for the training loop
 train(datagen, Xtrain, model, steps, epochs_given)
 
 # Save the selected model under the name given as second param (default: "model")
