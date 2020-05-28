@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Show Testing images</title>
+{% endblock %}
+
+{% block body %}
+<h1>Example images:</h1>
+
+<div>
+{% for image in images %}
+<div class="imgContainer">
+<img src="../static/Train/{{image}}" alt="{{image}}" height="230px" width="230px"></img>
+<p>Image: {{image}}</p>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
