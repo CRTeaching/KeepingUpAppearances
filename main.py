@@ -1,5 +1,5 @@
 import numpy as np
-import os 
+import os, sys
 
 from keras.preprocessing.image import ImageDataGenerator
 from model import ai_model
@@ -19,14 +19,18 @@ X = load_images(batch_size, X)
 
 # Split the loaded dataset into training and testing part
 # as per the given percentage (90% by default)
-training_percentage = 0.95
-split = int(training_percentage * len(X))
+try:
+        training_percentage = 0.95
+        split = int(training_percentage * len(X))
 
-# use the given percentage for training
-Xtrain = X[:split]
-# normalise the data (divide it by 255), while keeping it as float
-Xtrain = 1.0/255 * Xtrain
-
+        # use the given percentage for training
+        Xtrain = X[:split]
+        # normalise the data (divide it by 255), while keeping it as float
+        Xtrain = 1.0/255 * Xtrain
+except:
+        print("There was a problem while splitting the data, ensure something is loaded into X")
+        print("X lenght:" + len(X))
+        sys.exit(0)
 # Load the neural network
 model = ai_model()
 model.summary() # Give some information on the neural network
@@ -59,21 +63,24 @@ epochs_given = 5 # epochs for the training loop
 train(datagen, Xtrain, model, steps, epochs_given)
 
 # Save the selected model under the name given as second param (default: "model")
-save_model(model, "model")
+save_model(model, "model_testing")
 
-## test the model
-from skimage.color import rgb2lab
-# Test the model using the test images
-# Get the lightness channel of an image.
-Xtest = rgb2lab(1.0/255*X[split:])[:,:,:,0]
-Xtest = Xtest.reshape(Xtest.shape+(1,))
-#Get the ab channels of the image.
-Ytest = rgb2lab(1.0/255*X[split:])[:,:,:,1:]
-# Normalise the data to be between -1 and 1.
-Ytest = Ytest / 128
-#print the model's accuracy.
-print(model.evaluate(Xtest, Ytest, batch_size=70))
-
+try:
+        ## test the model
+        from skimage.color import rgb2lab
+        # Test the model using the test images
+        # Get the lightness channel of an image.
+        Xtest = rgb2lab(1.0/255*X[split:])[:,:,:,0]
+        Xtest = Xtest.reshape(Xtest.shape+(1,))
+        #Get the ab channels of the image.
+        Ytest = rgb2lab(1.0/255*X[split:])[:,:,:,1:]
+        # Normalise the data to be between -1 and 1.
+        Ytest = Ytest / 128
+        #print the model's accuracy.
+        print(model.evaluate(Xtest, Ytest, batch_size=70))
+except:
+        print("While evaluating the model, the progrma encountered an error!")
+        sys.exit(0)
 # Load the Testing subdataset and prepare the images
 color_me = []
 
